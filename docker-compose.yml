@@ -1,0 +1,35 @@
+version: '2'
+
+services:
+    db:
+        image: mysql
+        ports:
+            - 3306:3306
+        volumes:
+            - "./.data/db:/var/lib/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+    redis:
+        image: redis:alpine
+        ports:
+            - 6379:6379
+    php:
+        build: docker/php7.0-fpm
+        ports:
+            - 9000:9000
+        links:
+            - db:mysqldb
+            - redis
+        volumes:
+            - ./:/var/www/miniwaveme
+            - ./logs/miniwaveme:/var/www/miniwaveme/app/logs
+    nginx:
+        build: docker/nginx
+        ports:
+            - 80:80
+        links:
+            - php
+        volumes_from:
+            - php
+        volumes:
+            - ./logs/nginx/:/var/log/nginx

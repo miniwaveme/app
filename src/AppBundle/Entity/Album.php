@@ -2,97 +2,68 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ORM\AlbumRepository")
  * @JMS\ExclusionPolicy("all")
  */
-class Album
+class Album extends Entity
 {
-    /**
-     * @var int
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
-     * @var string
-     * @JMS\Groups({"api"})
-     * @JMS\Type("string")
-     * @JMS\Expose
-     * @ORM\Column(type="string", length=36)
-     */
-    private $uuid;
-
-    /**
-     * @var \DateTime
-     * @JMS\Expose
-     * @ORM\Column(type="datetime")
-     * @Gedmo\Timestampable(on="update")
-     */
-    private $updatedAt;
-
     /**
      * @var string
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotNull()
+     *
+     * @JMS\Expose
+     * @JMS\Groups({"api"})
      */
     private $name;
 
     /**
      * @var int
      * @ORM\Column(type="integer", length=4)
+     *
+     * @Assert\GreaterThan(1900)
+     *
+     * @JMS\Expose
+     * @JMS\Groups({"api"})
      */
     private $year;
 
     /**
-     * @var \DateTime
+     * @var Artist
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Artist")
+     *
+     * @Assert\Valid
+     *
      * @JMS\Expose
-     * @ORM\Column(type="datetime")
-     * @Gedmo\Timestampable(on="create")
+     * @JMS\Groups({"api"})
      */
-    private $createdAt;
+    private $artist;
+
+    /**
+     * @var Track[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Track", mappedBy="album")
+     *
+     * @Assert\Valid
+     *
+     * @JMS\Expose
+     * @JMS\Groups({"api"})
+     */
+    private $tracks;
 
     public function __construct()
     {
-        $this->uuid = \Ramsey\Uuid\Uuid::uuid4();
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUuid()
-    {
-        return $this->uuid;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
+        parent::__construct();
+        $this->tracks = new ArrayCollection();
     }
 
     /**
@@ -125,5 +96,29 @@ class Album
     public function setYear($year)
     {
         $this->year = $year;
+    }
+
+    /**
+     * @return Artist
+     */
+    public function getArtist()
+    {
+        return $this->artist;
+    }
+
+    /**
+     * @param Artist $artist
+     */
+    public function setArtist($artist)
+    {
+        $this->artist = $artist;
+    }
+
+    /**
+     * @return Track[]|ArrayCollection
+     */
+    public function getTracks()
+    {
+        return $this->tracks;
     }
 }

@@ -1,0 +1,31 @@
+services:
+
+  app.form.entity_handler:
+    class: AppBundle\Form\Handler\EntityFormHandler
+    arguments:
+      - "@doctrine"
+
+  app.form_factory:
+    class: AppBundle\Form\Factory\RestFormFactory
+    arguments:
+      - "@form.factory"
+
+  app.transformer.album:
+    class: AppBundle\Form\DataTransformer\AlbumTransformer
+    arguments:
+      - "@app.repository.album"
+
+  app.transformer.artist:
+      class: AppBundle\Form\DataTransformer\ArtistTransformer
+      arguments:
+        - "@app.repository.artist"
+
+  app.form.api.album_selector:
+    class: AppBundle\Form\Type\Api\AlbumSelectorType
+    arguments:
+      - "@app.transformer.album"
+
+  app.form.api.artist_selector:
+    class: AppBundle\Form\Type\Api\ArtistSelectorType
+    arguments:
+      - "@app.transformer.artist"

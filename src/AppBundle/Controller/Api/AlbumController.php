@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Album;
+use AppBundle\Form\Type\Api\AlbumType;
 use FOS\RestBundle\Controller\Annotations\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -129,4 +130,4 @@ class AlbumController extends Controller
         $em->flush();
     }
 }
-}
+
