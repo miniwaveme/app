@@ -42,7 +42,6 @@ class ArtistTransformer implements DataTransformerInterface
         }
 
         $artist = $this->repository->findOneBy(['uuid' => $uuid]);
-
         if (null === $artist) {
             throw new TransformationFailedException(sprintf(
                 'An artist with this uuid "%s" does not exist!',

@@ -2,19 +2,19 @@ services:
   app.repository.album:
     class: AppBundle\Repository\ORM\AlbumRepository
     factory: "doctrine:getRepository"
-    arguments: [Socloz\AppBundle\Entity\Album]
+    arguments: [\AppBundle\Entity\Album]
 
   app.repository.artist:
     class: AppBundle\Repository\ORM\ArtistRepository
-    factory: "doctrine::getRepository"
-    arguments: [Socloz\AppBundle\Entity\Artist]
+    factory: "doctrine:getRepository"
+    arguments: [\AppBundle\Entity\Artist]
 
   app.repository.track:
     class: AppBundle\Repository\ORM\TrackRepository
-    factory: "doctrine::getRepository"
-    arguments: [Socloz\AppBundle\Entity\Track]
+    factory: "doctrine:getRepository"
+    arguments: [\AppBundle\Entity\Track]
 
   app.repository.user:
     class: AppBundle\Repository\ORM\UserRepository
-    factory: "doctrine::getRepository"
-    arguments: [Socloz\AppBundle\Entity\User]
+    factory: "doctrine:getRepository"
+    arguments: [\AppBundle\Entity\User]

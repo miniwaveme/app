@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2dccdf70afb5b0a410c69d9235080dd3",
+    "content-hash": "f7a43fd688b09d70c9a07c6795ae7c0a",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1055,6 +1055,52 @@
                 "sql"
             ],
             "time": "2014-01-12T16:20:24+00:00"
+        },
+        {
+            "name": "mhor/php-mediainfo",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mhor/php-mediainfo.git",
+                "reference": "a16bad2b884dc17d40fcea432115ec0c3ec0e739"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mhor/php-mediainfo/zipball/a16bad2b884dc17d40fcea432115ec0c3ec0e739",
+                "reference": "a16bad2b884dc17d40fcea432115ec0c3ec0e739",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "symfony/filesystem": "~2.3|~3.0",
+                "symfony/process": "~2.3|~3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mhor\\MediaInfo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "mhor",
+                    "email": "maxime.horcholle@gmail.com"
+                }
+            ],
+            "description": "PHP wrapper around the mediainfo command",
+            "time": "2017-01-17T22:45:20+00:00"
         },
         {
             "name": "michelf/php-markdown",

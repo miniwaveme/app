@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ORM\UserRepository")
  * @ORM\Table(name="app_user")
  */
 class User extends Entity implements AdvancedUserInterface
@@ -97,24 +97,32 @@ class User extends Entity implements AdvancedUserInterface
         return array_unique($roles);
     }
 
-    public function getPassword()
-    {
-        $this->password;
-    }
-
     public function getSalt()
     {
         //nop
     }
 
-    public function getUsername()
-    {
-        $this->username;
-    }
-
     public function eraseCredentials()
     {
         //nop
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param string $username
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        return $this;
     }
 
     /**
@@ -127,25 +135,29 @@ class User extends Entity implements AdvancedUserInterface
 
     /**
      * @param string $email
+     * @return User
      */
     public function setEmail($email)
     {
         $this->email = $email;
+        return $this;
     }
 
     /**
-     * @param string $username
+     * @return string
      */
-    public function setUsername($username)
+    public function getPassword()
     {
-        $this->username = $username;
+        return $this->password;
     }
 
     /**
      * @param string $password
+     * @return User
      */
     public function setPassword($password)
     {
         $this->password = $password;
+        return $this;
     }
 }

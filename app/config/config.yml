@@ -79,7 +79,7 @@ fos_oauth_server:
     auth_code_class:     AppBundle\Entity\OAuth\AuthCode
 
     service:
-        user_provider:
+        user_provider: app.user_provider
 
 fos_rest:
     param_fetcher_listener: true

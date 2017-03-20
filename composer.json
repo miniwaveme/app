@@ -27,7 +27,8 @@
         "friendsofsymfony/elastica-bundle": "^3.2",
         "nelmio/api-doc-bundle": "^2.13",
         "snc/redis-bundle": "2.x-dev",
-        "predis/predis": "^1.0"
+        "predis/predis": "^1.0",
+        "mhor/php-mediainfo": "^3.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

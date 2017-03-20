@@ -17,10 +17,11 @@ class Client extends BaseClient
      */
     protected $id;
 
+    /**
+     *  {@inheritdoc}
+     */
     public function __construct()
     {
         parent::__construct();
     }
-
-
 }
