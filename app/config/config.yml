@@ -118,3 +118,39 @@ stof_doctrine_extensions:
     orm:
         default:
             timestampable: true
+
+liip_imagine:
+    filter_sets:
+        cover_thumb:
+            cache: cached_predis_covers
+            quality: 75
+            filters:
+                thumbnail: { size: [120, 120], mode: outbound }
+
+        cover_medium:
+            cache: cached_predis_covers
+            quality: 80
+            filters:
+                thumbnail: { size: [360, 360], mode: outbound }
+        cover_hight:
+            cache: cached_predis_covers
+            quality: 85
+            filters:
+                thumbnail: { size: [480, 480], mode: outbound }
+
+        artist_thumb:
+            cache: cached_predis_artists
+            quality: 75
+            filters:
+                thumbnail: { size: [120, 120], mode: outbound }
+
+        artist_medium:
+            cache: cached_predis_artists
+            quality: 80
+            filters:
+                thumbnail: { size: [360, 360], mode: outbound }
+        artist_hight:
+            cache: cached_predis_artists
+            quality: 85
+            filters:
+                thumbnail: { size: [480, 480], mode: outbound }

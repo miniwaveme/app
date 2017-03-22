@@ -40,15 +40,7 @@ class CreateUserCommand extends ContainerAwareCommand
 
         $this->getContainer()->get('app.service.user')->createOrUpdateUser($user);
 
-        $clientManager = $this->getContainer()->get('fos_oauth_server.client_manager.default');
-        $client = $clientManager->createClient();
-        $client->setRedirectUris(['http://www.miniwave.me']);
-        $client->setAllowedGrantTypes(['password']);
-        $clientManager->updateClient($client);
-
         $output->writeln('Username: '.$user->getUsername());
         $output->writeln('Password: '.$password);
-        $output->writeln('Client id: '.$client->getPublicId().'_'.$client->getRandomId());
-        $output->writeln('Client secret: '.$client->getSecret());
     }
 }

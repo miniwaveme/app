@@ -28,7 +28,9 @@
         "nelmio/api-doc-bundle": "^2.13",
         "snc/redis-bundle": "2.x-dev",
         "predis/predis": "^1.0",
-        "mhor/php-mediainfo": "^3.0"
+        "mhor/php-mediainfo": "^3.0",
+        "liip/imagine-bundle": "^1.7",
+        "doctrine/cache": "^1.6"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
