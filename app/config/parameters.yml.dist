@@ -16,3 +16,9 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
     redis_host: redis
+
+    imagine.covers.web_root: "%kernel.root_dir%/../web"
+    imagine.covers.cache_prefix: "pictures/artists/cache"
+
+    imagine.artists.web_root: "%kernel.root_dir%/../web"
+    imagine.artists.cache_prefix: "pictures/artists/cache"
