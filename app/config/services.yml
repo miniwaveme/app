@@ -33,7 +33,7 @@ services:
     app.imagine.cache.covers.resolver.web_path.cache:
         class: Liip\ImagineBundle\Imagine\Cache\Resolver\CacheResolver
         arguments:
-            - "@cache.predis"
+            - "@app.cache.predis"
             - "@app.imagine.cache.covers.resolver.web_path"
             - { prefix: "predis" }
         tags:
@@ -42,13 +42,8 @@ services:
     app.imagine.cache.artists.resolver.web_path.cache:
         class: Liip\ImagineBundle\Imagine\Cache\Resolver\CacheResolver
         arguments:
-            - "@cache.predis"
+            - "@app.cache.predis"
             - "@app.imagine.cache.artists.resolver.web_path"
             - { prefix: "predis" }
         tags:
             - { name: "liip_imagine.cache.resolver", resolver: "cached_predis_artists" }
-
-    cache.predis:
-        class: Doctrine\Common\Cache\PredisCache
-        arguments:
-            - "@snc_redis.default"

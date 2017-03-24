@@ -19,7 +19,7 @@ class Entity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -31,7 +31,7 @@ class Entity
      * @JMS\Groups({"api"})
 
      */
-    private $uuid;
+    protected $uuid;
 
     /**
      * @var \DateTime
@@ -43,7 +43,7 @@ class Entity
      *
      * @Gedmo\Timestampable(on="update")
      */
-    private $updatedAt;
+    protected $updatedAt;
 
     /**
      * @var \DateTime
@@ -55,7 +55,7 @@ class Entity
      *
      * @Gedmo\Timestampable(on="create")
      */
-    private $createdAt;
+    protected  $createdAt;
 
     public function __construct()
     {

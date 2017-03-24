@@ -114,10 +114,60 @@ snc_redis:
             alias: default
             dsn: redis://%redis_host%
 
+        predis_cache:
+            type: predis
+            alias: predis_cache
+            dsn: redis://%redis_host%/1
+
+        doctrine_predis_cache:
+            type: predis
+            alias: doctrine_predis_cache
+            dsn: redis://%redis_host%/2
+
+    doctrine:
+        metadata_cache:
+            client: doctrine_predis_cache
+            entity_manager: default
+            namespace: "%kernel.root_dir%"
+        result_cache:
+            client: doctrine_predis_cache
+            entity_manager: default
+            namespace: "%kernel.root_dir%"
+        query_cache:
+            client: doctrine_predis_cache
+            entity_manager: default
+            namespace: "%kernel.root_dir%"
+
 stof_doctrine_extensions:
     orm:
         default:
             timestampable: true
+
+doctrine_cache:
+    aliases:
+        app.cache.predis: predis_cache
+
+    providers:
+        predis_cache:
+            predis:
+                client_id: snc_redis.predis_cache
+vich_uploader:
+    db_driver: orm
+    mappings:
+        album_art_image:
+            uri_prefix:         /images/album-art
+            upload_destination: '%kernel.root_dir%/../web/images/album-arts'
+            delete_on_remove:   true
+
+        artist_image:
+            uri_prefix:         /images/artist
+            upload_destination: '%kernel.root_dir%/../web/images/artists'
+            delete_on_remove:   true
+
+        audio_file:
+            uri_prefix:         /files/audio
+            upload_destination: '%kernel.root_dir%/../web/files/audio'
+            delete_on_remove:   true
 
 liip_imagine:
     filter_sets:

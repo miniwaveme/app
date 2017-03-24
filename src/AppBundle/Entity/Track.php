@@ -5,10 +5,13 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ORM\TrackRepository")
  * @JMS\ExclusionPolicy("all")
+ * @Vich\Uploadable
  */
 class Track extends Entity
 {
@@ -51,6 +54,21 @@ class Track extends Entity
      * @JMS\Groups({"api"})
      */
     private $bpm;
+
+    /**
+     *
+     * @Vich\UploadableField(mapping="audio_file", fileNameProperty="audioFileName")
+     *
+     * @var File
+     */
+    private $audioFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    private $audioFileName;
 
     /**
      * @var Artist
@@ -170,5 +188,44 @@ class Track extends Entity
     public function setAlbum($album)
     {
         $this->album = $album;
+    }
+
+    /**
+     * @return File
+     */
+    public function getAudioFile()
+    {
+        return $this->audioFile;
+    }
+
+    /**
+     * @param File $audioFile
+     * @return Track
+     */
+    public function setAudioFile(File $audioFile)
+    {
+        $this->audioFile = $audioFile;
+        if ($audioFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAudioFileName()
+    {
+        return $this->audioFileName;
+    }
+
+    /**
+     * @param string $audioFileName
+     * @return Track
+     */
+    public function setAudioFileName($audioFileName)
+    {
+        $this->audioFileName = $audioFileName;
+        return $this;
     }
 }

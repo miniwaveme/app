@@ -30,7 +30,8 @@
         "predis/predis": "^1.0",
         "mhor/php-mediainfo": "^3.0",
         "liip/imagine-bundle": "^1.7",
-        "doctrine/cache": "^1.6"
+        "doctrine/cache": "^1.6",
+        "vich/uploader-bundle": "^1.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
