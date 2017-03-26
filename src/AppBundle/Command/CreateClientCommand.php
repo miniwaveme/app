@@ -28,7 +28,7 @@ class CreateClientCommand extends ContainerAwareCommand
         $client->setAllowedGrantTypes(['password']);
         $clientManager->updateClient($client);
 
-        $output->writeln('Client id: '.$client->getPublicId().'_'.$client->getRandomId());
+        $output->writeln('Client id: '.$client->getPublicId());
         $output->writeln('Client secret: '.$client->getSecret());
     }
 }

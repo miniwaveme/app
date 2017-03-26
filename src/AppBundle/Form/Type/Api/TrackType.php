@@ -3,6 +3,8 @@
 namespace AppBundle\Form\Type\Api;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,10 +17,10 @@ class TrackType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('number')
-            ->add('name')
-            ->add('duration')
-            ->add('bpm')
+            ->add('number', TextType::class)
+            ->add('name', TextType::class)
+            ->add('duration', IntegerType::class)
+            ->add('bpm', IntegerType::class)
             ->add('album', AlbumSelectorType::class)
             ->add('artists', ArtistSelectorType::class)
         ;

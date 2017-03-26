@@ -64,7 +64,7 @@ class Track extends Entity
     private $audioFile;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @var string
      */

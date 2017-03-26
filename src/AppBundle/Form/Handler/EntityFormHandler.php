@@ -30,7 +30,7 @@ class EntityFormHandler
     public function handle(FormInterface $form, Request $request)
     {
         $method = $request->getMethod();
-        $form->submit($request, 'PATCH' !== $method);
+        $form->submit($request->request->all(), 'PATCH' !== $method);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entity = $form->getData();

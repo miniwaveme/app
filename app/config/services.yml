@@ -1,7 +1,9 @@
-# Learn more about services, parameters and containers at
-# http://symfony.com/doc/current/service_container.html
 parameters:
-#    parameter_name: value
+    imagine.album_arts.web_root: "%kernel.root_dir%/../web"
+    imagine.album_arts.cache_prefix: "images/album_arts/cache"
+
+    imagine.artists.web_root: "%kernel.root_dir%/../web"
+    imagine.artists.cache_prefix: "images/artists/cache"
 
 services:
     app.user_provider:
@@ -14,13 +16,13 @@ services:
         arguments:
             - "@app.repository.user"
 
-    app.imagine.cache.covers.resolver.web_path:
+    app.imagine.cache.album_arts.resolver.web_path:
         class: Liip\ImagineBundle\Imagine\Cache\Resolver\WebPathResolver
         arguments:
             - "@filesystem"
             - "@router.request_context"
-            - "%imagine.covers.web_root%"
-            - "%imagine.covers.cache_prefix%"
+            - "%imagine.album_arts.web_root%"
+            - "%imagine.album_arts.cache_prefix%"
 
     app.imagine.cache.artists.resolver.web_path:
         class: Liip\ImagineBundle\Imagine\Cache\Resolver\WebPathResolver
@@ -30,14 +32,14 @@ services:
             - "%imagine.artists.web_root%"
             - "%imagine.artists.cache_prefix%"
 
-    app.imagine.cache.covers.resolver.web_path.cache:
+    app.imagine.cache.album_arts.resolver.web_path.cache:
         class: Liip\ImagineBundle\Imagine\Cache\Resolver\CacheResolver
         arguments:
             - "@app.cache.predis"
-            - "@app.imagine.cache.covers.resolver.web_path"
+            - "@app.imagine.cache.album_arts.resolver.web_path"
             - { prefix: "predis" }
         tags:
-            - { name: "liip_imagine.cache.resolver", resolver: "cached_predis_covers" }
+            - { name: "liip_imagine.cache.resolver", resolver: "cached_predis_album_arts" }
 
     app.imagine.cache.artists.resolver.web_path.cache:
         class: Liip\ImagineBundle\Imagine\Cache\Resolver\CacheResolver

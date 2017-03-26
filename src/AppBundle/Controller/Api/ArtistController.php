@@ -8,7 +8,10 @@ use FOS\RestBundle\Controller\Annotations\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations\FileParam;
 
 /**
  * @Route("/artists")
@@ -19,16 +22,16 @@ class ArtistController extends Controller
      * @ApiDoc(
      *   section="Artist",
      *   resource=true,
-     *   description="Gets a event for a given id",
+     *   description="Gets an album for a given id",
      *   output="AppBundle\Entity\Artist",
      *   statusCodes={
      *     200="Returned when successful",
-     *     404="Returned when the event is not found",
+     *     404="Returned when the album is not found",
      *     401="Returned when authentication fails"
      *   }
      * )
      * @Route("/{uuid}", methods={"GET"})
-     * @View(serializerGroups={"Default","details"})
+     * @View(serializerGroups={"api"})
      *
      * @param Artist $artist
      *
@@ -42,7 +45,7 @@ class ArtistController extends Controller
      * @ApiDoc(
      *   section="Artist",
      *   resource=true,
-     *   description="Creates a new event",
+     *   description="Creates a new album",
      *   input={
      *       "class"="AppBundle\Form\Type\Api\ArtistType",
      *       "name"=""
@@ -55,7 +58,7 @@ class ArtistController extends Controller
      *   }
      * )
      * @Route("", methods={"POST"})
-     * @View(statusCode=201)
+     * @View(serializerGroups={"api"}, statusCode=201)
      *
      * @param Request $request
      *
@@ -63,21 +66,19 @@ class ArtistController extends Controller
      */
     public function createAction(Request $request)
     {
-        $artist = $this->get('app.form.entity_handler')->handle(
-            $this->get('app.form_factory')->create(
-                new ArtistType(),
-                new Artist()
-            ),
+        return $this->get('app.form.entity_handler')->handle(
+            $this->get('app.form_factory')->create(ArtistType::class, new Artist(), [
+                'method' => $request->getMethod(),
+            ]),
             $request
         );
-
-        return $artist;
     }
+
     /**
      * @ApiDoc(
      *     section="Artist",
      *     resource=true,
-     *     description="Updates a event",
+     *     description="Updates an album",
      *     input={
      *         "class"="AppBundle\Form\Type\Api\ArtistType",
      *         "name"=""
@@ -87,11 +88,11 @@ class ArtistController extends Controller
      *         204="Returned when successful",
      *         400="Returned when data is invalid",
      *         401="Returned when authentication fails",
-     *         404="Returned when event is not found"
+     *         404="Returned when album is not found"
      *     }
      * )
      * @Route("/{uuid}", methods={"PUT", "PATCH"})
-     * @View(statusCode=204)
+     * @View(serializerGroups={"api"}, statusCode=204)
      *
      * @param Request  $request
      * @param Artist $artist
@@ -101,7 +102,7 @@ class ArtistController extends Controller
     public function updateAction(Request $request, Artist $artist)
     {
         return $this->get('app.form.entity_handler')->handle(
-            $this->get('app.form_factory')->create(new ArtistType(), $artist, [
+            $this->get('app.form_factory')->create(ArtistType::class, $artist, [
                 'method' => $request->getMethod(),
             ]),
             $request
@@ -111,15 +112,15 @@ class ArtistController extends Controller
      * @ApiDoc(
      *     section="Artist",
      *     resource=true,
-     *     description="Delete a event",
+     *     description="Delete an album",
      *     statusCodes={
      *         204="Returned when successful",
      *         401="Returned when authentication fails",
-     *         404="Returned when an event is not found"
+     *         404="Returned when an album is not found"
      *     }
      * )
      * @Route("/{uuid}", methods={"DELETE"})
-     * @View(statusCode=204)
+     * @View(serializerGroups={"api"}, statusCode=204)
      *
      * @param Artist $artist
      */
@@ -128,5 +129,36 @@ class ArtistController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($artist);
         $em->flush();
+    }
+
+    /**
+     * @ApiDoc(
+     *     section="Artist",
+     *     resource=false,
+     *     description="Attach an image",
+     *     input={
+     *         "class"="AppBundle\Form\Type\Api\ArtistType",
+     *         "name"=""
+     *     },
+     *     output="AppBundle\Entity\Artist",
+     *     statusCodes={
+     *         204="Returned when successful",
+     *         400="Returned when data is invalid",
+     *         401="Returned when authentication fails",
+     *         404="Returned when artist is not found"
+     *     }
+     * )
+     * @FileParam(name="image", image=true, default="noImage")
+     * @Route("/{uuid}/attach/image", methods={"PUT", "PATCH"})
+     * @View(serializerGroups={"api"}, statusCode=204)
+     *
+     * @param Request  $request
+     * @param Artist $artist
+     *
+     * @return JsonResponse
+     */
+    public function attachArtistArtAction(Request $request, Artist $artist)
+    {
+        return new JsonResponse();
     }
 }

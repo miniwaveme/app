@@ -30,6 +30,6 @@ class RestFormFactory
      */
     public function create($type, $data = null, array $options = [])
     {
-        return $this->factory->createNamed(null, $type, $data, $options);
+        return $this->factory->create($type, $data, $options);
     }
 }

@@ -19,3 +19,18 @@ monolog:
             level: debug
         console:
             type:  console
+
+snc_redis:
+    doctrine:
+        metadata_cache:
+            client: doctrine_predis_cache
+            entity_manager: default
+            namespace: "%kernel.root_dir%"
+        result_cache:
+            client: doctrine_predis_cache
+            entity_manager: default
+            namespace: "%kernel.root_dir%"
+        query_cache:
+            client: doctrine_predis_cache
+            entity_manager: default
+            namespace: "%kernel.root_dir%"

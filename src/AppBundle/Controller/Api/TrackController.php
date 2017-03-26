@@ -8,7 +8,9 @@ use FOS\RestBundle\Controller\Annotations\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations\FileParam;
 
 class TrackController extends Controller
 {
@@ -16,16 +18,16 @@ class TrackController extends Controller
      * @ApiDoc(
      *   section="Track",
      *   resource=true,
-     *   description="Gets a event for a given id",
+     *   description="Gets an album for a given id",
      *   output="AppBundle\Entity\Track",
      *   statusCodes={
      *     200="Returned when successful",
-     *     404="Returned when the event is not found",
+     *     404="Returned when the album is not found",
      *     401="Returned when authentication fails"
      *   }
      * )
      * @Route("/{uuid}", methods={"GET"})
-     * @View(serializerGroups={"Default","details"})
+     * @View(serializerGroups={"api"})
      *
      * @param Track $track
      *
@@ -40,7 +42,7 @@ class TrackController extends Controller
      * @ApiDoc(
      *   section="Track",
      *   resource=true,
-     *   description="Creates a new event",
+     *   description="Creates a new album",
      *   input={
      *       "class"="AppBundle\Form\Type\Api\TrackType",
      *       "name"=""
@@ -53,7 +55,7 @@ class TrackController extends Controller
      *   }
      * )
      * @Route("", methods={"POST"})
-     * @View(statusCode=201)
+     * @View(serializerGroups={"api"}, statusCode=201)
      *
      * @param Request $request
      *
@@ -75,7 +77,7 @@ class TrackController extends Controller
      * @ApiDoc(
      *     section="Track",
      *     resource=true,
-     *     description="Updates a event",
+     *     description="Updates an album",
      *     input={
      *         "class"="AppBundle\Form\Type\Api\TrackType",
      *         "name"=""
@@ -85,11 +87,11 @@ class TrackController extends Controller
      *         204="Returned when successful",
      *         400="Returned when data is invalid",
      *         401="Returned when authentication fails",
-     *         404="Returned when event is not found"
+     *         404="Returned when album is not found"
      *     }
      * )
      * @Route("/{uuid}", methods={"PUT", "PATCH"})
-     * @View(statusCode=204)
+     * @View(serializerGroups={"api"}, statusCode=204)
      *
      * @param Request  $request
      * @param Track $track
@@ -109,15 +111,15 @@ class TrackController extends Controller
      * @ApiDoc(
      *     section="Track",
      *     resource=true,
-     *     description="Delete a event",
+     *     description="Delete an album",
      *     statusCodes={
      *         204="Returned when successful",
      *         401="Returned when authentication fails",
-     *         404="Returned when an event is not found"
+     *         404="Returned when an album is not found"
      *     }
      * )
      * @Route("/{uuid}", methods={"DELETE"})
-     * @View(statusCode=204)
+     * @View(serializerGroups={"api"}, statusCode=204)
      *
      * @param Track $track
      */
@@ -126,5 +128,36 @@ class TrackController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($track);
         $em->flush();
+    }
+
+    /**
+     * @ApiDoc(
+     *     section="Track",
+     *     resource=false,
+     *     description="Attach a track",
+     *     input={
+     *         "class"="AppBundle\Form\Type\Api\TrackType",
+     *         "name"=""
+     *     },
+     *     output="AppBundle\Entity\Track",
+     *     statusCodes={
+     *         204="Returned when successful",
+     *         400="Returned when data is invalid",
+     *         401="Returned when authentication fails",
+     *         404="Returned when track is not found"
+     *     }
+     * )
+     * @FileParam(name="audioFile", requirements={"mimeTypes"="audio/ogg", "maxSize"="20000k"}, strict=true)
+     * @Route("/{uuid}/attach/audio-file", methods={"PUT", "PATCH"})
+     * @View(serializerGroups={"api"}, statusCode=204)
+     *
+     * @param Request  $request
+     * @param Track $track
+     *
+     * @return JsonResponse
+     */
+    public function attachAudioFileAction(Request $request, Track $track)
+    {
+        return new JsonResponse();
     }
 }

@@ -24,8 +24,12 @@ services:
     class: AppBundle\Form\Type\Api\AlbumSelectorType
     arguments:
       - "@app.transformer.album"
+    tags:
+      - name: form.type
 
   app.form.api.artist_selector:
     class: AppBundle\Form\Type\Api\ArtistSelectorType
     arguments:
       - "@app.transformer.artist"
+    tags:
+      - name: form.type

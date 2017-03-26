@@ -20,7 +20,7 @@ framework:
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
-    #serializer:      { enable_annotations: true }
+    serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
     default_locale:  "%locale%"
@@ -51,12 +51,6 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
-        # if using pdo_sqlite as your database driver:
-        #   1. add the path in parameters.yml
-        #     e.g. database_path: "%kernel.root_dir%/../var/data/data.sqlite"
-        #   2. Uncomment database_path in parameters.yml.dist
-        #   3. Uncomment next line:
-        #path:     "%database_path%"
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -71,6 +65,7 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+# FOS OAuthServer Configuration
 fos_oauth_server:
     db_driver: orm
     client_class:        AppBundle\Entity\OAuth\Client
@@ -81,17 +76,23 @@ fos_oauth_server:
     service:
         user_provider: app.user_provider
 
+# Nelmio API Doc Configuration
+nelmio_api_doc: ~
+
+# FOS Rest Configuration
 fos_rest:
     param_fetcher_listener: true
 
     view:
         view_response_listener: true
-        formats:
-            json: true
-            html: true
+
+    access_denied_listener:
+        json: true
 
     body_listener:
-        array_normalizer: fos_rest.normalizer.camel_keys
+        array_normalizer:
+          service: fos_rest.normalizer.camel_keys
+          forms: true
         decoders:
             json: fos_rest.decoder.json
 
@@ -100,13 +101,13 @@ fos_rest:
         validate: true
 
     allowed_methods_listener: true
-
     format_listener:
         rules:
-            - { path: '^/api', priorities: ['json'], fallback_format: json, prefer_extension: false }
+            - { path: '^/api', priorities: ['json'], fallback_format: ~, prefer_extension: false  }
             - { path: '^/', stop: true }
             - { path: '^/_', stop: true }
 
+# Snc Redis Configuration
 snc_redis:
     clients:
         default:
@@ -124,25 +125,13 @@ snc_redis:
             alias: doctrine_predis_cache
             dsn: redis://%redis_host%/2
 
-    doctrine:
-        metadata_cache:
-            client: doctrine_predis_cache
-            entity_manager: default
-            namespace: "%kernel.root_dir%"
-        result_cache:
-            client: doctrine_predis_cache
-            entity_manager: default
-            namespace: "%kernel.root_dir%"
-        query_cache:
-            client: doctrine_predis_cache
-            entity_manager: default
-            namespace: "%kernel.root_dir%"
-
+# Stof Doctrine Extensions Configuration
 stof_doctrine_extensions:
     orm:
         default:
             timestampable: true
 
+# Doctrine Cache Configuration
 doctrine_cache:
     aliases:
         app.cache.predis: predis_cache
@@ -151,6 +140,8 @@ doctrine_cache:
         predis_cache:
             predis:
                 client_id: snc_redis.predis_cache
+
+# Vich Uploader Configuration
 vich_uploader:
     db_driver: orm
     mappings:
@@ -169,21 +160,22 @@ vich_uploader:
             upload_destination: '%kernel.root_dir%/../web/files/audio'
             delete_on_remove:   true
 
+# Liip Imagine Configuration
 liip_imagine:
     filter_sets:
-        cover_thumb:
-            cache: cached_predis_covers
+        album_art_thumb:
+            cache: cached_predis_album_arts
             quality: 75
             filters:
                 thumbnail: { size: [120, 120], mode: outbound }
 
-        cover_medium:
-            cache: cached_predis_covers
+        album_art_medium:
+            cache: cached_predis_album_arts
             quality: 80
             filters:
                 thumbnail: { size: [360, 360], mode: outbound }
-        cover_hight:
-            cache: cached_predis_covers
+        album_art_hight:
+            cache: cached_predis_album_arts
             quality: 85
             filters:
                 thumbnail: { size: [480, 480], mode: outbound }

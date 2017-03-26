@@ -8,7 +8,9 @@ use FOS\RestBundle\Controller\Annotations\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations\FileParam;
 
 /**
  * @Route("/albums")
@@ -19,16 +21,16 @@ class AlbumController extends Controller
      * @ApiDoc(
      *   section="Album",
      *   resource=true,
-     *   description="Gets a event for a given id",
+     *   description="Gets a album for a given id",
      *   output="AppBundle\Entity\Album",
      *   statusCodes={
      *     200="Returned when successful",
-     *     404="Returned when the event is not found",
+     *     404="Returned when the album is not found",
      *     401="Returned when authentication fails"
      *   }
      * )
      * @Route("/{uuid}", methods={"GET"})
-     * @View(serializerGroups={"Default","details"})
+     * @View(serializerGroups={"api"})
      *
      * @param Album $album
      *
@@ -38,11 +40,12 @@ class AlbumController extends Controller
     {
         return $album;
     }
+
     /**
      * @ApiDoc(
      *   section="Album",
      *   resource=true,
-     *   description="Creates a new event",
+     *   description="Creates a new album",
      *   input={
      *       "class"="AppBundle\Form\Type\Api\AlbumType",
      *       "name"=""
@@ -55,7 +58,7 @@ class AlbumController extends Controller
      *   }
      * )
      * @Route("", methods={"POST"})
-     * @View(statusCode=201)
+     * @View(serializerGroups={"api"}, statusCode=201)
      *
      * @param Request $request
      *
@@ -73,11 +76,12 @@ class AlbumController extends Controller
 
         return $album;
     }
+
     /**
      * @ApiDoc(
      *     section="Album",
      *     resource=true,
-     *     description="Updates a event",
+     *     description="Updates an album",
      *     input={
      *         "class"="AppBundle\Form\Type\Api\AlbumType",
      *         "name"=""
@@ -87,11 +91,11 @@ class AlbumController extends Controller
      *         204="Returned when successful",
      *         400="Returned when data is invalid",
      *         401="Returned when authentication fails",
-     *         404="Returned when event is not found"
+     *         404="Returned when album is not found"
      *     }
      * )
      * @Route("/{uuid}", methods={"PUT", "PATCH"})
-     * @View(statusCode=204)
+     * @View(serializerGroups={"api"}, statusCode=204)
      *
      * @param Request  $request
      * @param Album $album
@@ -107,19 +111,20 @@ class AlbumController extends Controller
             $request
         );
     }
+
     /**
      * @ApiDoc(
      *     section="Album",
      *     resource=true,
-     *     description="Delete a event",
+     *     description="Delete an album",
      *     statusCodes={
      *         204="Returned when successful",
      *         401="Returned when authentication fails",
-     *         404="Returned when an event is not found"
+     *         404="Returned when an album is not found"
      *     }
      * )
      * @Route("/{uuid}", methods={"DELETE"})
-     * @View(statusCode=204)
+     * @View(serializerGroups={"api"}, statusCode=204)
      *
      * @param Album $album
      */
@@ -128,6 +133,37 @@ class AlbumController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($album);
         $em->flush();
+    }
+
+    /**
+     * @ApiDoc(
+     *     section="Album",
+     *     resource=false,
+     *     description="Attach an album art",
+     *     input={
+     *         "class"="AppBundle\Form\Type\Api\AlbumType",
+     *         "name"=""
+     *     },
+     *     output="AppBundle\Entity\Album",
+     *     statusCodes={
+     *         204="Returned when successful",
+     *         400="Returned when data is invalid",
+     *         401="Returned when authentication fails",
+     *         404="Returned when album is not found"
+     *     }
+     * )
+     * @Route("/{uuid}/attach/album-art", methods={"PUT", "PATCH"})
+     * @View(serializerGroups={"api"}, statusCode=204)
+     * @FileParam(name="image", image=true, default="noImage")
+     *
+     * @param Request  $request
+     * @param Album $album
+     *
+     * @return JsonResponse
+     */
+    public function attachAlbumArtAction(Request $request, Album $album)
+    {
+        return new JsonResponse();
     }
 }
 
