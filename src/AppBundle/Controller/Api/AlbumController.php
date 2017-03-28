@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Api;
 use AppBundle\Entity\Album;
 use AppBundle\Form\Type\Api\AlbumType;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Request\ParamFetcher;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -152,18 +153,22 @@ class AlbumController extends Controller
      *         404="Returned when album is not found"
      *     }
      * )
+     *
+     * @FileParam(name="albumArt", image=true, strict=true, nullable=false)
      * @Route("/{uuid}/attach/album-art", methods={"PUT", "PATCH"})
      * @View(serializerGroups={"api"}, statusCode=204)
-     * @FileParam(name="image", image=true, default="noImage")
      *
-     * @param Request  $request
+     * @param ParamFetcher $paramFetcher
      * @param Album $album
      *
-     * @return JsonResponse
+     * @return Album
      */
-    public function attachAlbumArtAction(Request $request, Album $album)
+    public function attachAlbumArtAction(ParamFetcher $paramFetcher, Album $album)
     {
-        return new JsonResponse();
+        $album->setAlbumArtFile($paramFetcher->get('albumArt'));
+        $this->get('app.repository.album')->update($album);
+
+        return $album;
     }
 }
 

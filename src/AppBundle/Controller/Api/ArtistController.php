@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Api;
 use AppBundle\Entity\Artist;
 use AppBundle\Form\Type\Api\ArtistType;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Request\ParamFetcher;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -148,17 +149,20 @@ class ArtistController extends Controller
      *         404="Returned when artist is not found"
      *     }
      * )
-     * @FileParam(name="image", image=true, default="noImage")
-     * @Route("/{uuid}/attach/image", methods={"PUT", "PATCH"})
+     * @FileParam(name="image", image=true, strict=true, nullable=false)
+     * @Route("/{uuid}/attach/image", methods={"POST"})
      * @View(serializerGroups={"api"}, statusCode=204)
      *
-     * @param Request  $request
+     * @param ParamFetcher $paramFetcher
      * @param Artist $artist
      *
-     * @return JsonResponse
+     * @return Artist
      */
-    public function attachArtistArtAction(Request $request, Artist $artist)
+    public function attachArtistArtAction(ParamFetcher $paramFetcher, Artist $artist)
     {
-        return new JsonResponse();
+        $artist->setImageFile($paramFetcher->get('image'));
+        $this->get('app.repository.artist')->update($artist);
+
+        return $artist;
     }
 }

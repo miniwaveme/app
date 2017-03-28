@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Api;
 use AppBundle\Entity\Track;
 use AppBundle\Form\Type\Api\TrackType;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Request\ParamFetcher;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -147,17 +148,20 @@ class TrackController extends Controller
      *         404="Returned when track is not found"
      *     }
      * )
-     * @FileParam(name="audioFile", requirements={"mimeTypes"="audio/ogg", "maxSize"="20000k"}, strict=true)
-     * @Route("/{uuid}/attach/audio-file", methods={"PUT", "PATCH"})
+     * @FileParam(name="audioFile", requirements={"mimeTypes"="audio/ogg", "maxSize"="20000k"}, strict=true, nullable=false)
+     * @Route("/{uuid}/attach/audio-file", methods={"POST"})
      * @View(serializerGroups={"api"}, statusCode=204)
      *
-     * @param Request  $request
+     * @param ParamFetcher $paramFetcher
      * @param Track $track
      *
-     * @return JsonResponse
+     * @return Track
      */
-    public function attachAudioFileAction(Request $request, Track $track)
+    public function attachAudioFileAction(ParamFetcher $paramFetcher, Track $track)
     {
-        return new JsonResponse();
+        $track->setAudioFile($paramFetcher->get('audioFile'));
+        $this->get('app.repository.track')->update($track);
+
+        return $track;
     }
 }

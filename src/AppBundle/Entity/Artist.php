@@ -57,6 +57,20 @@ class Artist extends Entity
     }
 
     /**
+     * @param File $imageFile
+     * @return Artist
+     */
+    public function setImageFile(File $imageFile)
+    {
+        $this->imageFile = $imageFile;
+        if ($imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+        return $this;
+    }
+
+
+    /**
      * @return File|null
      */
     public function getImageFile()

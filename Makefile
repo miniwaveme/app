@@ -42,6 +42,7 @@ clean:         ## Removes all generated files
 perm:           ## Fix the application cache and logs permissions
 	$(APP) chmod 777 -R var
 	$(APP) chmod 777 -R logs
+	$(APP) chmod 777 -R web/images
 
 test-php:       ## Run the PHP tests
 	$(APP) vendor/bin/phpunit
