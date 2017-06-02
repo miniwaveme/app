@@ -92,11 +92,13 @@ class Album extends Entity
     }
 
     /**
-     * @param string $name
+     * @param $name
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
     }
 
     /**
@@ -108,11 +110,13 @@ class Album extends Entity
     }
 
     /**
-     * @param int $year
+     * @param $year
+     * @return $this
      */
     public function setYear($year)
     {
         $this->year = $year;
+        return $this;
     }
 
     /**
@@ -163,11 +167,13 @@ class Album extends Entity
     }
 
     /**
-     * @param Artist $artist
+     * @param $artist
+     * @return $this
      */
     public function setArtist($artist)
     {
         $this->artist = $artist;
+        return $this;
     }
 
     /**

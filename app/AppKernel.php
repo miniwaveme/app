@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new Fresh\VichUploaderSerializationBundle\FreshVichUploaderSerializationBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

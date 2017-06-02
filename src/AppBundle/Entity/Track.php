@@ -103,11 +103,13 @@ class Track extends Entity
     }
 
     /**
-     * @param int $number
+     * @param $number
+     * @return $this
      */
     public function setNumber($number)
     {
         $this->number = $number;
+        return $this;
     }
 
     /**
@@ -119,11 +121,13 @@ class Track extends Entity
     }
 
     /**
-     * @param string $name
+     * @param $name
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
     }
 
     /**
@@ -135,11 +139,13 @@ class Track extends Entity
     }
 
     /**
-     * @param int $duration
+     * @param $duration
+     * @return $this
      */
     public function setDuration($duration)
     {
         $this->duration = $duration;
+        return $this;
     }
 
     /**
@@ -152,10 +158,12 @@ class Track extends Entity
 
     /**
      * @param int $bpm
+     * @return $this
      */
     public function setBpm($bpm)
     {
         $this->bpm = $bpm;
+        return $this;
     }
 
     /**
@@ -168,10 +176,12 @@ class Track extends Entity
 
     /**
      * @param Artist $artist
+     * @return $this
      */
-    public function setArtist($artist)
+    public function setArtist(Artist $artist)
     {
         $this->artist = $artist;
+        return $this;
     }
 
     /**
@@ -184,10 +194,12 @@ class Track extends Entity
 
     /**
      * @param Album $album
+     * @return $this
      */
-    public function setAlbum($album)
+    public function setAlbum(Album $album)
     {
         $this->album = $album;
+        return $this;
     }
 
     /**

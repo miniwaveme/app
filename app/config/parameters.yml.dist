@@ -17,3 +17,6 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     redis_host: redis
+
+    elasticsearch_host: elasticsearch
+    elasticsearch_port: ~

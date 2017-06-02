@@ -24,14 +24,15 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "twig/twig": "^1.0||^2.0",
         "friendsofsymfony/rest-bundle": "^2.1",
-        "friendsofsymfony/elastica-bundle": "^3.2",
+        "friendsofsymfony/elastica-bundle": "^4.0",
         "nelmio/api-doc-bundle": "^2.13",
         "snc/redis-bundle": "2.x-dev",
         "predis/predis": "^1.0",
         "mhor/php-mediainfo": "^3.0",
         "liip/imagine-bundle": "^1.7",
         "doctrine/cache": "^1.6",
-        "vich/uploader-bundle": "^1.4"
+        "vich/uploader-bundle": "^1.4",
+        "fresh/vich-uploader-serialization-bundle": "~1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
@@ -55,7 +56,7 @@
     },
     "config": {
         "platform": {
-            "php": "5.5.9"
+            "php": "5.6.0"
         }
     },
     "extra": {

@@ -6,12 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Fresh\VichUploaderSerializationBundle\Annotation as Fresh;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ORM\ArtistRepository")
  * @JMS\ExclusionPolicy("all")
  * @Vich\Uploadable
+ * @Fresh\VichSerializableClass
  */
 class Artist extends Entity
 {
@@ -29,12 +31,19 @@ class Artist extends Entity
     /**
      * @Vich\UploadableField(mapping="artist_image", fileNameProperty="imageName")
      *
+     * @JMS\Exclude
+     *
      * @var File
      */
     private $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Fresh\VichSerializableField("imageFile")
+     * @JMS\Expose()
+     * @JMS\SerializedName("image")
+     * @JMS\Groups({"api"})
      *
      * @var string
      */

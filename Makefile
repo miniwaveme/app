@@ -46,3 +46,10 @@ perm:           ## Fix the application cache and logs permissions
 
 test-php:       ## Run the PHP tests
 	$(APP) vendor/bin/phpunit
+
+import-tracks:    ## Import tracks
+	$(CONSOLE) app:import-tracks ./files/
+
+
+elastica-populate:    ## populates elastic indexes
+	$(CONSOLE) fos:elastica:populate -vv

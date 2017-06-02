@@ -8,6 +8,15 @@ use Doctrine\ORM\EntityRepository;
 class ArtistRepository extends EntityRepository
 {
     /**
+     * @param $slug
+     * @return Artist
+     */
+    public function findArtistBySlug($slug)
+    {
+        return $this->findOneBy(['slug' => $slug]);
+    }
+
+    /**
      * @param Artist $artist
      * @return Artist
      */

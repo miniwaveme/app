@@ -146,12 +146,12 @@ vich_uploader:
     db_driver: orm
     mappings:
         album_art_image:
-            uri_prefix:         /images/album-art
+            uri_prefix:         /images/album-arts
             upload_destination: '%kernel.root_dir%/../web/images/album-arts'
             delete_on_remove:   true
 
         artist_image:
-            uri_prefix:         /images/artist
+            uri_prefix:         /images/artists
             upload_destination: '%kernel.root_dir%/../web/images/artists'
             delete_on_remove:   true
 
@@ -196,3 +196,54 @@ liip_imagine:
             quality: 85
             filters:
                 thumbnail: { size: [480, 480], mode: outbound }
+
+# FOS Elastica configuration
+fos_elastica:
+  clients:
+    default: { host: "%elasticsearch_host%", port: "%elasticsearch_port%" }
+
+  indexes:
+    app:
+      types:
+        artist:
+          properties:
+            name: ~
+          persistence:
+            driver: orm
+            model: AppBundle\Entity\Artist
+            provider: ~
+            finder: ~
+            listener:
+
+              logger: true
+              insert: true
+              update: true
+              delete: true
+        track:
+          properties:
+            name: ~
+          persistence:
+            driver: orm
+            model: AppBundle\Entity\Track
+            provider: ~
+            finder: ~
+            listener:
+
+              logger: true
+              insert: true
+              update: true
+              delete: true
+        album:
+          properties:
+            name: ~
+          persistence:
+            driver: orm
+            model: AppBundle\Entity\Album
+            provider: ~
+            finder: ~
+            listener:
+
+              logger: true
+              insert: true
+              update: true
+              delete: true
