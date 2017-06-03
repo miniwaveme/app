@@ -38,8 +38,14 @@ class Track extends Entity
     private $name;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $slug;
+
+    /**
      * @var int
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      *
      * @JMS\Expose
      * @JMS\Groups({"api"})
@@ -48,7 +54,7 @@ class Track extends Entity
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      *
      * @JMS\Expose
      * @JMS\Groups({"api"})
@@ -127,6 +133,24 @@ class Track extends Entity
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     * @return Track
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
         return $this;
     }
 

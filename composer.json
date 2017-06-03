@@ -32,7 +32,9 @@
         "liip/imagine-bundle": "^1.7",
         "doctrine/cache": "^1.6",
         "vich/uploader-bundle": "^1.4",
-        "fresh/vich-uploader-serialization-bundle": "~1.0"
+        "fresh/vich-uploader-serialization-bundle": "~1.0",
+        "stof/doctrine-extensions-bundle": "^1.2",
+        "cocur/slugify": "^2.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

@@ -28,6 +28,7 @@ class AppKernel extends Kernel
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Fresh\VichUploaderSerializationBundle\FreshVichUploaderSerializationBundle(),
+            new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

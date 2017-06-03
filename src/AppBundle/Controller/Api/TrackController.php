@@ -72,8 +72,14 @@ class TrackController extends Controller
             $request
         );
 
+        if ($track instanceof Track) {
+            $track->setSlug($this->get('cocur_slugify')->slugify($track->getName()));
+            $this->get('app.repository.track')->update($track);
+        }
+
         return $track;
     }
+
     /**
      * @ApiDoc(
      *     section="Track",
@@ -101,12 +107,19 @@ class TrackController extends Controller
      */
     public function updateAction(Request $request, Track $track)
     {
-        return $this->get('app.form.entity_handler')->handle(
+        $track = $this->get('app.form.entity_handler')->handle(
             $this->get('app.form_factory')->create(new TrackType(), $track, [
                 'method' => $request->getMethod(),
             ]),
             $request
         );
+
+        if ($track instanceof Track) {
+            $track->setSlug($this->get('cocur_slugify')->slugify($track->getName()));
+            $this->get('app.repository.track')->update($track);
+        }
+
+        return $track;
     }
     /**
      * @ApiDoc(

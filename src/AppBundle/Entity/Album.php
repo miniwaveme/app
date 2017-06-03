@@ -28,6 +28,13 @@ class Album extends Entity
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $slug;
+
+    /**
      * @var int
      * @ORM\Column(type="integer", length=4)
      *
@@ -98,6 +105,24 @@ class Album extends Entity
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param $slug
+     * @return $this
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
         return $this;
     }
 

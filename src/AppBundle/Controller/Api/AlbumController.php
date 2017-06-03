@@ -75,6 +75,11 @@ class AlbumController extends Controller
             $request
         );
 
+        if ($album instanceof Album) {
+            $album->setSlug($this->get('cocur_slugify')->slugify($album->getName()));
+            $this->get('app.repository.album')->update($album);
+        }
+
         return $album;
     }
 
@@ -105,12 +110,19 @@ class AlbumController extends Controller
      */
     public function updateAction(Request $request, Album $album)
     {
-        return $this->get('app.form.entity_handler')->handle(
+        $album = $this->get('app.form.entity_handler')->handle(
             $this->get('app.form_factory')->create(new AlbumType(), $album, [
                 'method' => $request->getMethod(),
             ]),
             $request
         );
+
+        if ($album instanceof Album) {
+            $album->setSlug($this->get('cocur_slugify')->slugify($album->getName()));
+            $this->get('app.repository.album')->update($album);
+        }
+
+        return $album;
     }
 
     /**

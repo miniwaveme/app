@@ -2,8 +2,6 @@ services:
 
   app.form.entity_handler:
     class: AppBundle\Form\Handler\EntityFormHandler
-    arguments:
-      - "@doctrine"
 
   app.form_factory:
     class: AppBundle\Form\Factory\RestFormFactory

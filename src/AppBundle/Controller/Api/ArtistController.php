@@ -66,12 +66,19 @@ class ArtistController extends Controller
      */
     public function createAction(Request $request)
     {
-        return $this->get('app.form.entity_handler')->handle(
+        $artist = $this->get('app.form.entity_handler')->handle(
             $this->get('app.form_factory')->create(ArtistType::class, new Artist(), [
                 'method' => $request->getMethod(),
             ]),
             $request
         );
+
+        if ($artist instanceof Artist) {
+            $artist->setSlug($this->get('cocur_slugify')->slugify($artist->getName()));
+            $this->get('app.repository.artist')->update($artist);
+        }
+
+        return $artist;
     }
 
     /**
@@ -101,12 +108,19 @@ class ArtistController extends Controller
      */
     public function updateAction(Request $request, Artist $artist)
     {
-        return $this->get('app.form.entity_handler')->handle(
+        $artist = $this->get('app.form.entity_handler')->handle(
             $this->get('app.form_factory')->create(ArtistType::class, $artist, [
                 'method' => $request->getMethod(),
             ]),
             $request
         );
+
+        if ($artist instanceof Artist) {
+            $artist->setSlug($this->get('cocur_slugify')->slugify($artist->getName()));
+            $this->get('app.repository.artist')->update($artist);
+        }
+
+        return $artist;
     }
     /**
      * @ApiDoc(

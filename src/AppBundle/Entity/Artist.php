@@ -29,6 +29,13 @@ class Artist extends Entity
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $slug;
+
+    /**
      * @Vich\UploadableField(mapping="artist_image", fileNameProperty="imageName")
      *
      * @JMS\Exclude
@@ -59,10 +66,30 @@ class Artist extends Entity
 
     /**
      * @param string $name
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param $slug
+     * @return $this
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        return $this;
     }
 
     /**

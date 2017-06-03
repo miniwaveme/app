@@ -50,6 +50,5 @@ test-php:       ## Run the PHP tests
 import-tracks:    ## Import tracks
 	$(CONSOLE) app:import-tracks ./files/
 
-
 elastica-populate:    ## populates elastic indexes
-	$(CONSOLE) fos:elastica:populate -vv
+	$(CONSOLE) fos:elastica:populate

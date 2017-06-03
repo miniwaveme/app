@@ -15,9 +15,9 @@ class AlbumRepository extends EntityRepository
     public function findAlbumBySlug($slug, $artistSlug)
     {
         return $this->createQueryBuilder('a')
-            ->join('t.artist', 'artist')
-            ->where('slug = %slug%')
-            ->andWhere('artist.slug = %artist_slug%')
+            ->join('a.artist', 'artist')
+            ->where('a.slug = :slug')
+            ->andWhere('artist.slug = :artist_slug')
             ->setParameter('artist_slug', $artistSlug)
             ->setParameter('slug', $slug)
             ->getQuery()
